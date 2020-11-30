@@ -24,7 +24,7 @@ spring:
     url: "jdbc:mysql://127.0.0.1:${EU_ARCH_DB_PORT}/${EU_ARCH_DB_CATALOG}?autoReconnect=true&useSSL=false&characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=UTC"
     username: ${EU_ARCH_DB_USERNAME}
     password: ${EU_ARCH_DB_PASSWORD}
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
   hikari:
     minimumIdle: 1
     maximum-pool-size: 1
