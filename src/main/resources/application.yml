@@ -1,7 +1,7 @@
 info:
   app:
     name: Europeana Archaelogy Mapping Tool
-    description: Europeana Archaelogy Mapping Tool Api
+    description: Europeana Archaelogy Mapping Tool API
     version: 1.0.0
 management:
   endpoints:
@@ -21,9 +21,9 @@ server:
 
 spring:
   datasource:
-    url: "jdbc:mysql://127.0.0.1:3306/europeana_archaeology?autoReconnect=true&useSSL=false&characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=UTC"
-    username: ${SHARE3D_DB_USER:share3d}
-    password: ${SHARE3D_DB_PASSWORD:share3d}
+    url: "jdbc:mysql://127.0.0.1:${EU_ARCH_DB_PORT}/${EU_ARCH_DB_CATALOG}?autoReconnect=true&useSSL=false&characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=UTC"
+    username: ${EU_ARCH_DB_USERNAME}
+    password: ${EU_ARCH_DB_PASSWORD}
     driver-class-name: com.mysql.jdbc.Driver
   hikari:
     minimumIdle: 1
@@ -59,13 +59,4 @@ spring:
 
 ## File Storage Properties
 # All files uploaded through the REST API will be stored in this directory
-#storage.file.dir: /data/services/share3d_storage
-#file.upload-dir: /data/services/tmp_storage
-file.storage-home: /data/services/storage_tmp
-
-# Mailgun configuration
-mailgun:
-  domainName: "mailer.share3d.eu"
-  apiKey: "c078aecbaeec4cf8ea31cb8e95b2d46e-1df6ec32-e856d932"
-  sender: "europeana-archaeology@carare.eu"
-  # https://europeanaarchaeology.carare.eu/
+file.storage-home: ${EU_ARCH_FS_STORAGE_HOME}

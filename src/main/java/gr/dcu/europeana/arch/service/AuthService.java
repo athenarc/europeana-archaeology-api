@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import gr.dcu.europeana.arch.api.controller.mapper.UserMapper;
 import gr.dcu.europeana.arch.api.dto.auth.*;
 import gr.dcu.europeana.arch.config.AppConfig;
+import gr.dcu.europeana.arch.domain.Settings;
 import gr.dcu.europeana.arch.domain.entity.SettingEntity;
 import gr.dcu.europeana.arch.domain.entity.UserEntity;
 import gr.dcu.europeana.arch.domain.entity.UserSessionEntity;
@@ -19,7 +20,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
-
 import gr.dcu.europeana.arch.service.email.EmailBuilderService;
 import gr.dcu.europeana.arch.service.email.MailgunService;
 import gr.dcu.utils.MySQLUtils;
@@ -32,8 +32,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
 
+    // @Autowired
+    // private AppConfig appConfig;
     @Autowired
-    private AppConfig appConfig;
+    private Settings settings;
     
     @Autowired
     private UserRepository userRepository;
@@ -101,7 +103,7 @@ public class AuthService {
             recipients.addAll(adminRecipients);
             log.info("Notify users. User: {} Admins: {}", email, adminRecipients);
 
-            String from = appConfig.getMailgunSender();
+            String from = settings.getMailgunSender();
             String subject = AppConfig.PROJECT_NAME + " - " + AppConfig.SERVICE_NAME + ": New account";
 
             Map<String, String> variables = new HashMap<>();
@@ -112,7 +114,7 @@ public class AuthService {
             String body = emailBuilderService.buildSignupEmail("A new account created.", variables);
             //log.info(body);
 
-            mailgunService.configure(appConfig.getMailgunDomainName(), appConfig.getMailgunApiKey());
+            mailgunService.configure(settings.getMailgunDomainName(), settings.getMailgunApiKey());
             mailgunService.sendMessage(from, recipients, subject, body, false);
 
         } catch(Exception ex) {
@@ -328,7 +330,7 @@ public class AuthService {
                     recipients.addAll(adminRecipients);
                     log.info("Notify users. User: {} Admins: {}", email, adminRecipients);
 
-                    String from = appConfig.getMailgunSender();
+                    String from = settings.getMailgunSender();
                     String subject = AppConfig.PROJECT_NAME + " - " + AppConfig.SERVICE_NAME + " : Reset password";
 
                     Map<String, String> variables = new HashMap<>();
@@ -341,7 +343,7 @@ public class AuthService {
                             "Reset password request.", variables);
                     //log.info(body);
 
-                    mailgunService.configure(appConfig.getMailgunDomainName(), appConfig.getMailgunApiKey());
+                    mailgunService.configure(settings.getMailgunDomainName(), settings.getMailgunApiKey());
                     mailgunService.sendMessage(from, recipients, subject, body, false);
 
                 } catch(Exception ex) {

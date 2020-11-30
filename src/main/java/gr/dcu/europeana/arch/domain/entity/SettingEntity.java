@@ -18,4 +18,7 @@ public class SettingEntity {
 
     public static final String MAILGUN_RECIPIENTS_SIGN_UP        = "mail.recipients.sign_up";
     public static final String MAILGUN_RECIPIENTS_RESET_PASSWORD = "mail.recipients.reset_password";
+    public static final String MAILGUN_DOMAIN_NAME = "mailgun.domain_name";
+    public static final String MAILGUN_API_KEY     = "mailgun.api_key";
+    public static final String MAILGUN_SENDER      = "mailgun.sender";
 }
